@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/list_of_albums.dart';
+
 // TODO: List every album (ListView + link to the album). Add filters (by genre, year, band...)
 
 class AlbumListScreen extends StatelessWidget {
@@ -19,23 +21,7 @@ class AlbumListScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Album List page'),
       ),
-      body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: null,
-              child: ListTile(
-                leading: SizedBox(
-                  child: Image.asset('assets/images/placeholder_album.jpg'),
-                ),
-                title: Text(albumList[index]['band']),
-                subtitle: Text(albumList[index]['title']),
-              ),
-            );
-          },
-          itemCount: albumList.length,
-        ),
-      ),
+      body: AlbumList(albumList: albumList),
     );
   }
 }
