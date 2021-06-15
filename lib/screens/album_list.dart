@@ -21,7 +21,7 @@ class AlbumListScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Album List page'),
       ),
-      body: AlbumList(albumList: albumList),
+      body: ListOfAlbums(albumList: albumList),
     );
   }
 }

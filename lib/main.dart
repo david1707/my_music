@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: UserCollectionScreen.routeName,
+      initialRoute: UserWishListScreen.routeName,
       routes: {
         AlbumCreateScreen.routeName: (context) => AlbumCreateScreen(),
         AlbumEditScreen.routeName: (context) => AlbumEditScreen(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AlbumList extends StatelessWidget {
-  const AlbumList({@required this.albumList});
+class ListOfAlbums extends StatelessWidget {
+  const ListOfAlbums({@required this.albumList});
 
   final List<Map> albumList;
 
