@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "760017770117",
+    "project_id": "my-music-31c06",
+    "storage_bucket": "my-music-31c06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760017770117:android:17f1ad2d24bdcbf6c8bbec",
+        "android_client_info": {
+          "package_name": "net.letslearnabout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760017770117-hj6s310qnlkjt0sdv5u9foshk08qenkq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_085EGnkfHYNU3jvNvRqQ4qye3x-6BPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760017770117-hj6s310qnlkjt0sdv5u9foshk08qenkq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
