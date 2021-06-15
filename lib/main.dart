@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
 import './screens/album_create.dart';
 import './screens/album_edit.dart';
 import './screens/album_list.dart';
@@ -17,7 +19,9 @@ import './screens/user_lists.dart';
 import './screens/user_view_list.dart';
 import './screens/user_whislist.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -30,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: UserWishListScreen.routeName,
+      initialRoute: SignUpScreen.routeName,
       routes: {
         AlbumCreateScreen.routeName: (context) => AlbumCreateScreen(),
         AlbumEditScreen.routeName: (context) => AlbumEditScreen(),

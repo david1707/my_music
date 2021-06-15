@@ -2,14 +2,23 @@ import 'package:flutter/material.dart';
 
 class RoundedTextField extends StatelessWidget {
   final String hintText;
+  final TextEditingController myController;
+  final TextInputType keyboardType;
+  final bool isPassword;
 
   const RoundedTextField({
-    this.hintText,
+    @required this.hintText,
+    @required this.myController,
+    @required this.keyboardType,
+    this.isPassword = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: keyboardType,
+      controller: myController,
+      obscureText: isPassword,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: const BorderRadius.all(
