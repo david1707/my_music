@@ -21,6 +21,11 @@ class SignUpScreen extends StatelessWidget {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      showSnackBar(
+        text: 'Registration successful.',
+        color: Colors.green,
+        context: context,
+      );
       Navigator.of(context).pushNamed(LoginScreen.routeName, arguments: {
         'email': email,
         'password': password,
