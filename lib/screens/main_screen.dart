@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:badges/badges.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 class MainScreen extends StatefulWidget {
   static const routeName = '/';
 
@@ -14,8 +17,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    inspect(FirebaseAuth.instance);
+    
     return Scaffold(
       appBar: AppBar(
+        title: Text('Home'),
         actions: [
           IconButton(
             onPressed: () {

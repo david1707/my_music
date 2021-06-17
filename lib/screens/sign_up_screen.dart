@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_music/screens/login_screen.dart';
-
 import '../constants.dart';
+import '../models/user.dart';
 import '../helper/snackbar.dart';
 import '../widgets/rounded_text_field.dart';
 
@@ -11,49 +9,19 @@ import '../widgets/rounded_text_field.dart';
 class SignUpScreen extends StatelessWidget {
   static const routeName = '/sign-up';
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _password1Controller = TextEditingController();
   final _password2Controller = TextEditingController();
 
-  void _registerUser(
-      {String email, String password, BuildContext context}) async {
-    try {
-      UserCredential userCredential =await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      userCredential.user.updateDisplayName(_nameController.text);
-      userCredential.user.updateDisplayName(_nameController.text);
-      userCredential.user.reload();
+  void _registerUser({BuildContext context}) async {
+    UserAuth user = UserAuth(
+        email: _emailController.text,
+        name: _nameController.text,
+        password: _password1Controller.text,
+        context: context);
 
-      showSnackBar(
-        text: 'Registration successful.',
-        color: Colors.green,
-        context: context,
-      );
-      Navigator.of(context).pushNamed(LoginScreen.routeName, arguments: {
-        'email': email,
-        'password': password,
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        showSnackBar(
-          text: 'The password provided is too weak.',
-          color: Colors.red,
-          context: context,
-        );
-      } else if (e.code == 'email-already-in-use') {
-        showSnackBar(
-          text: 'Email already in use.',
-          color: Colors.red,
-          context: context,
-        );
-      }
-    } catch (e) {
-      print(e);
-    }
+    user.registration();
   }
 
   @override
@@ -120,8 +88,6 @@ class SignUpScreen extends StatelessWidget {
                         if (_password1Controller.text ==
                             _password2Controller.text) {
                           _registerUser(
-                            email: _emailController.text,
-                            password: _password1Controller.text,
                             context: context,
                           );
                         } else {
