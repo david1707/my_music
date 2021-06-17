@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:my_music/screens/sign_up_screen.dart';
 
 import './login_screen.dart';
 import '../widgets/start_fade_transition.dart';
@@ -56,7 +57,7 @@ class SplashScreen extends StatelessWidget {
               StartFadeTransition(
                 curves: Curves.easeInOut,
                 durationInMilliseconds: 1000,
-                delay: 3500,
+                delay: 3000,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -65,8 +66,23 @@ class SplashScreen extends StatelessWidget {
                   ),
                   child: Text('Login'),
                   onPressed: () {
-                    // TODO Check if the login info is SharedPreferences. If it is, navigate to main page. If not, navigate to login
                     Navigator.of(context).pushNamed(LoginScreen.routeName);
+                  },
+                ),
+              ),
+              StartFadeTransition(
+                curves: Curves.easeInOut,
+                durationInMilliseconds: 1000,
+                delay: 3250,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text('Sign up'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(SignUpScreen.routeName);
                   },
                 ),
               ),
