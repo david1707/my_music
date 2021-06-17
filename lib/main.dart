@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import './screens/album_create.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: SignUpScreen.routeName,
+      initialRoute: SplashScreen.routeName,
       routes: {
         AlbumCreateScreen.routeName: (context) => AlbumCreateScreen(),
         AlbumEditScreen.routeName: (context) => AlbumEditScreen(),
@@ -43,7 +44,12 @@ class MyApp extends StatelessWidget {
         BandEditScreen.routeName: (context) => BandEditScreen(),
         BandListScreen.routeName: (context) => BandListScreen(),
         GenreListScreen.routeName: (context) => GenreListScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),
+        LoginScreen.routeName: (context) {
+          if (FirebaseAuth.instance?.currentUser?.email != null)
+            return MainScreen();
+          else
+            return LoginScreen();
+        },
         MainScreen.routeName: (context) => MainScreen(),
         SplashScreen.routeName: (context) => SplashScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),

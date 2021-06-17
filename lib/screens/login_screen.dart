@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +23,7 @@ class LoginScreen extends StatelessWidget {
     user.login();
   }
 
-  void _checkArguments(BuildContext context) {
+  void _fillEmailPasswordFields(BuildContext context) {
     final args =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
     if (args != null &&
@@ -35,7 +36,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _checkArguments(context);
+    _fillEmailPasswordFields(context);
 
     return Scaffold(
       appBar: AppBar(
