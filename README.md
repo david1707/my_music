@@ -21,6 +21,7 @@ Future updates:
 If I have enough time:
 
 - Auto-login on registration (On user registration, pass the info to the FirebaseAuth.instance)
+- Create AppBar widget and share it with all app screens?
 - Genres and Sub-genres: Pick Metal to choose between Black Metal, Doom Metal, Folk Metal, etc
 - Members should be, instead of a String, an entry of the Members Table, to see where each musician has been played and it is playing
 - Screen with Member info.

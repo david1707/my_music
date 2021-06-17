@@ -54,10 +54,7 @@ class UserAuth {
         color: Colors.green,
         context: context,
       );
-      Navigator.of(context).pushNamed(LoginScreen.routeName, arguments: {
-        'email': email,
-        'password': password,
-      });
+      Navigator.of(context).pushNamed(MainScreen.routeName);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         showSnackBar(

@@ -23,21 +23,8 @@ class LoginScreen extends StatelessWidget {
     user.login();
   }
 
-  void _fillEmailPasswordFields(BuildContext context) {
-    final args =
-        ModalRoute.of(context).settings.arguments as Map<String, String>;
-    if (args != null &&
-        args.containsKey('email') &&
-        args.containsKey('password')) {
-      _emailController.text = args['email'];
-      _passwordController.text = args['password'];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    _fillEmailPasswordFields(context);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Login page'),
