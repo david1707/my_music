@@ -3,7 +3,6 @@
 An application where the users can add/remove music albums to/from their collections, share them, whislist, Admin users can also add, modify or delete albums, bands, and more, and Mega also assign who is an Admin or a normal user
 
 Future updates:
-- [WIP]Add login/signup Screens
 - [WIP]Add email Auth with Firebase (Email, password, name, type of user [Normal (adds/remove music albums,sharing), Admin (Normal + Add/Modify/Delete albums and bands ), Mega(Admin + add user as Admin/Normal + Create music styles) ])
 - Add login/signup validation
 - Improve login/signup Screens style
@@ -21,6 +20,7 @@ Future updates:
 
 If I have enough time:
 
+- Auto-login on registration (On user registration, pass the info to the FirebaseAuth.instance)
 - Genres and Sub-genres: Pick Metal to choose between Black Metal, Doom Metal, Folk Metal, etc
 - Members should be, instead of a String, an entry of the Members Table, to see where each musician has been played and it is playing
 - Screen with Member info.

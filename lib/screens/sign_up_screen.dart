@@ -12,6 +12,7 @@ class SignUpScreen extends StatelessWidget {
   static const routeName = '/sign-up';
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _password1Controller = TextEditingController();
   final _password2Controller = TextEditingController();
@@ -19,8 +20,14 @@ class SignUpScreen extends StatelessWidget {
   void _registerUser(
       {String email, String password, BuildContext context}) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      UserCredential userCredential =await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      userCredential.user.updateDisplayName(_nameController.text);
+      userCredential.user.updateDisplayName(_nameController.text);
+      userCredential.user.reload();
+
       showSnackBar(
         text: 'Registration successful.',
         color: Colors.green,
@@ -72,6 +79,15 @@ class SignUpScreen extends StatelessWidget {
                       height: kSizedBoxLoginSign,
                     ),
                     Text('Fluff text'),
+                    SizedBox(
+                      height: kSizedBoxLoginSign,
+                    ),
+                    RoundedTextField(
+                      hintText: 'Username',
+                      myController: _nameController,
+                      keyboardType: TextInputType.text,
+                      isPassword: false,
+                    ),
                     SizedBox(
                       height: kSizedBoxLoginSign,
                     ),
