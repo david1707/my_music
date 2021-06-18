@@ -1,7 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import '../screens/main_screen.dart';
 import '../helper/snackbar.dart';
 
@@ -17,6 +19,8 @@ class UserAuth {
     @required this.context,
     this.name,
   });
+
+  static Future<String> getUser() async {}
 
   void login() async {
     try {
@@ -37,7 +41,7 @@ class UserAuth {
     }
   }
 
-  void registration() async {
+  Future<void> registration() async {
     try {
       final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -47,7 +51,15 @@ class UserAuth {
         password: password,
       );
       userCredential.user.updateDisplayName(this.name);
-      userCredential.user.reload();
+
+      print(userCredential.user.uid);
+
+      await FirebaseFirestore.instance.collection('/users').add({
+        'displayName': this.name,
+        'email': this.email,
+        'role': 'user',
+        'uid': userCredential.user.uid,
+      });
 
       showSnackBar(
         text: 'Registration successful.',
