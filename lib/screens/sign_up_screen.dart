@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../models/user.dart';
+import '../helper/snackbar.dart';
 import '../widgets/rounded_text_field.dart';
 
+// TODO: Add validation according to Firebase standards
 class SignUpScreen extends StatelessWidget {
   static const routeName = '/sign-up';
+
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _password1Controller = TextEditingController();
+  final _password2Controller = TextEditingController();
+
+  void _registerUser({BuildContext context}) async {
+    UserAuth user = UserAuth(
+        email: _emailController.text,
+        name: _nameController.text,
+        password: _password1Controller.text,
+        context: context);
+
+    user.registration();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +51,55 @@ class SignUpScreen extends StatelessWidget {
                       height: kSizedBoxLoginSign,
                     ),
                     RoundedTextField(
+                      hintText: 'Username',
+                      myController: _nameController,
+                      keyboardType: TextInputType.text,
+                      isPassword: false,
+                    ),
+                    SizedBox(
+                      height: kSizedBoxLoginSign,
+                    ),
+                    RoundedTextField(
                       hintText: 'Email',
+                      myController: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      isPassword: false,
                     ),
                     SizedBox(
                       height: kSizedBoxLoginSign,
                     ),
                     RoundedTextField(
                       hintText: 'Password',
+                      myController: _password1Controller,
+                      keyboardType: TextInputType.visiblePassword,
+                      isPassword: true,
                     ),
                     SizedBox(
                       height: kSizedBoxLoginSign,
                     ),
                     RoundedTextField(
                       hintText: 'Repeat Password',
-                    )
+                      myController: _password2Controller,
+                      keyboardType: TextInputType.visiblePassword,
+                      isPassword: true,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_password1Controller.text ==
+                            _password2Controller.text) {
+                          _registerUser(
+                            context: context,
+                          );
+                        } else {
+                          showSnackBar(
+                            text: 'Both passwords should be the same',
+                            color: Colors.red,
+                            context: context,
+                          );
+                        }
+                      },
+                      child: Text('Sign up'),
+                    ),
                   ],
                 ),
               ),
