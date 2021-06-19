@@ -20,7 +20,7 @@ class UserAuth {
     this.name,
   });
 
-  void login(context) async {
+  void login() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);

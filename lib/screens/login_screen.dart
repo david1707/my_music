@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
         email: _emailController.text,
         password: _passwordController.text,
         context: context);
-    user.login(context);
+    user.login();
   }
 
   @override

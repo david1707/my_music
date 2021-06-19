@@ -20,9 +20,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final String role = Provider.of<UserProvider>(context).getRole;
-    print('BUILD: $role');
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -48,7 +45,6 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
-              Provider.of<UserProvider>(context).changeRole('Empty');
               Navigator.of(context).pushNamed(LoginScreen.routeName);
             },
             icon: Icon(Icons.logout),
@@ -59,7 +55,14 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('This is your role: $role'),
+            Consumer<UserProvider>(
+              builder: (context, user, child) {
+                if (user?.getRole != null)
+                return Text('This is your role: ${user.getRole}');
+                else
+                return Text('Error fetching data. Please, log in again.');
+              },
+            ),
             Text('Welcome YOUR NAME!'),
             SizedBox(
               height: 50,
