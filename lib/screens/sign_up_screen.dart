@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
-import '../models/user.dart';
+import '../models/user_auth.dart';
 import '../helper/snackbar.dart';
 import '../widgets/rounded_text_field.dart';
 

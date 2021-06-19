@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:my_music/models/user.dart';
+import 'package:my_music/models/user_auth.dart';
 
 import '../constants.dart';
 import '../widgets/rounded_text_field.dart';

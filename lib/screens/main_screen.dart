@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:badges/badges.dart';
+import 'package:my_music/provider/user.dart';
 import 'package:my_music/screens/login_screen.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = '/';
@@ -17,18 +18,8 @@ class _MainScreenState extends State<MainScreen> {
   int totalWishlist = 3;
   String userRole = '';
 
-  // TODO: Move this to make it global => Provider time :/
-  void getRole() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userRole = prefs.get('role');
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    getRole();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -64,6 +55,11 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Consumer<UserProvider>(
+              builder: (context, user, child) {
+                return Text('This is your role: ${user.getRole}');
+              },
+            ),
             Text('Welcome YOUR NAME!'),
             SizedBox(
               height: 50,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import './provider/user.dart';
 import './screens/album_create.dart';
 import './screens/album_edit.dart';
 import './screens/album_list.dart';
@@ -23,7 +25,12 @@ import './screens/user_whislist.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +42,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: SplashScreen.routeName,
+      initialRoute: LoginScreen.routeName,
       routes: {
         AlbumCreateScreen.routeName: (context) => AlbumCreateScreen(),
         AlbumEditScreen.routeName: (context) => AlbumEditScreen(),
