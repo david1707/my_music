@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../screens/main_screen.dart';
 import '../helper/snackbar.dart';
+import '../provider/user_provider.dart';
+import '../screens/main_screen.dart';
 
 class UserAuth {
   final String email;
@@ -20,16 +20,13 @@ class UserAuth {
     this.name,
   });
 
-  static Future<String> getUser() async {}
-
-  void login() async {
+  void login(context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
       var data = await FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: userCredential.user.uid).get();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('role', data.docs[0]['role']);
+      UserProvider().changeRole(data.docs[0]['role']);
 
       Navigator.of(context).pushNamed(MainScreen.routeName);
     } on FirebaseAuthException catch (e) {
@@ -104,7 +101,6 @@ class UserAuth {
       'uid': userCredential.user.uid,
     });
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('userRole', 'user');
+    UserProvider().changeRole('user');
   }
 }

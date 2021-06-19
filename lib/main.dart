@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import './provider/user.dart';
+import 'provider/user_provider.dart';
 import './screens/album_create.dart';
 import './screens/album_edit.dart';
 import './screens/album_list.dart';

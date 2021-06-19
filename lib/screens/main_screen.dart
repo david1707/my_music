@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:badges/badges.dart';
-import 'package:my_music/provider/user.dart';
+import 'package:my_music/provider/user_provider.dart';
 import 'package:my_music/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +20,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String role = Provider.of<UserProvider>(context).getRole;
+    print('BUILD: $role');
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
@@ -45,6 +48,7 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
+              Provider.of<UserProvider>(context).changeRole('Empty');
               Navigator.of(context).pushNamed(LoginScreen.routeName);
             },
             icon: Icon(Icons.logout),
@@ -55,11 +59,7 @@ class _MainScreenState extends State<MainScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Consumer<UserProvider>(
-              builder: (context, user, child) {
-                return Text('This is your role: ${user.getRole}');
-              },
-            ),
+            Text('This is your role: $role'),
             Text('Welcome YOUR NAME!'),
             SizedBox(
               height: 50,
