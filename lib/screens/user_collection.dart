@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../widgets/appbar.dart';
+
 
 // TODO: List every album on the User Collection (List of IDs). The same filters on Album_list
 
@@ -16,9 +18,7 @@ class UserCollectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Collection page'),
-      ),
+      appBar: CustomAppBar(title: 'User Collection page',),
       body: Center(
         child: ListView.builder(
           itemBuilder: (context, index) {

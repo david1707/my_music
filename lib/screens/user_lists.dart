@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import '../screens/user_view_list.dart';
+import '../widgets/appbar.dart';
 
 // TODO: A list of Lists created by the user with their favourites albums
 // TODO: FAB/AppBar Icon to create a new one, swipe to delete (Modal confirmation), click to view/edit
@@ -26,9 +27,7 @@ class _UserListsScreenState extends State<UserListsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Lists page'),
-      ),
+      appBar: CustomAppBar(title: 'User Lists page',),
       body: Center(
         child: ListView.builder(
           itemBuilder: (context, index) {

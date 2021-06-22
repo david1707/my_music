@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:my_music/models/user_auth.dart';
 
 import '../constants.dart';
+import '../widgets/appbar.dart';
 import '../widgets/rounded_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -23,9 +24,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login page'),
-      ),
+      appBar: CustomAppBar(title: 'Login',),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

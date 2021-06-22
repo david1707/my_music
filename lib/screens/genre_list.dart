@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../widgets/appbar.dart';
 
 // TODO: List all genres. FAB/AppBar button to add a new one, click to edit (Modal), swipe to delete (Modal confirmation)
 
@@ -24,9 +25,7 @@ class GenreListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Genre List page'),
-      ),
+      appBar: CustomAppBar(title: 'Genre List page',),
       body: Center(
         child: ListView.builder(
           itemBuilder: (context, index) {

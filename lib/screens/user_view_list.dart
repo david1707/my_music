@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/list_of_albums.dart';
+import '../widgets/appbar.dart';
 
 // TODO: A list of albums created by the user
 // TODO: FAB/AppBar Icon to add a new album, swipe to delete it (Modal confirmation)
@@ -20,8 +21,8 @@ class UserViewListcreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User List page'),
+      appBar: CustomAppBar(
+        title: 'User List page',
       ),
       // TODO: Pass down a Icon.delete button to delete it from the list
       body: ListOfAlbums(albumList: albumList),

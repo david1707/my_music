@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/list_of_albums.dart';
+import '../widgets/appbar.dart';
 
 // TODO: List every album (ListView + link to the album). Add filters (by genre, year, band...)
 
@@ -18,9 +19,7 @@ class AlbumListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Album List page'),
-      ),
+      appBar: CustomAppBar(title: 'Album List page',),
       body: ListOfAlbums(albumList: albumList),
     );
   }

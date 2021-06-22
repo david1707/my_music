@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/appbar.dart';
+
 // TODO Display user info (Name, avatar, number of albums on the wishlist + link, number of albums on the collection + link, stats [cheese graph of genres by %])
 
 class UserInfoScreen extends StatelessWidget {
@@ -8,8 +10,8 @@ class UserInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Info page'),
+      appBar: CustomAppBar(
+        title: 'User Info page',
       ),
       body: Center(
         child: Column(

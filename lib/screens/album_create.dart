@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../widgets/appbar.dart';
 
 // TODO: Create a new Album (Date Released, id Genre, Time Length, List<String> tracks, String Title, Band Band, String Photo)
 
@@ -17,9 +18,7 @@ class _AlbumCreateScreenState extends State<AlbumCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Create a new Album'),
-      ),
+      appBar: CustomAppBar(title: 'Create a new Album',),
       body: Center(
         child: Form(
           key: _formKey,

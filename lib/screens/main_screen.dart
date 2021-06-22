@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:badges/badges.dart';
-import 'package:my_music/provider/user_provider.dart';
-import 'package:my_music/screens/login_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart';
+
+import '../provider/user_provider.dart';
+import '../screens/login_screen.dart';
 import '../widgets/appbar.dart';
 
 class MainScreen extends StatefulWidget {

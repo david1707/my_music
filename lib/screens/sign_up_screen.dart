@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../models/user_auth.dart';
 import '../helper/snackbar.dart';
+import '../widgets/appbar.dart';
 import '../widgets/rounded_text_field.dart';
 
 // TODO: Add validation according to Firebase standards
@@ -27,8 +28,8 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign up page'),
+      appBar: CustomAppBar(
+        title: 'Sign up page',
       ),
       body: Center(
         child: Column(

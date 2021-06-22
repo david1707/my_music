@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../widgets/appbar.dart';
 
 // TODO: Edit an Album (Date Released, id Genre, Time Length, List<String> tracks, String Title, Band Band, String Photo)
 // TODO: Delete button with confirmation
@@ -18,8 +19,8 @@ class _AlbumEditScreenState extends State<AlbumEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Album Edit page'),
+      appBar: CustomAppBar(
+        title: 'Album Edit page',
       ),
       body: Center(
         child: Form(

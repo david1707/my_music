@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../widgets/appbar.dart';
 
 // TODO: Create a new Band (String name, String Description, String Members, id Genre, String From, bool Active, String Photo)
 
@@ -17,9 +18,7 @@ class _BandCreateScreenState extends State<BandCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Band Create page'),
-      ),
+      appBar: CustomAppBar(title: 'Band Create page',),
        body: Center(
         child: Form(
           key: _formKey,
