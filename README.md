@@ -3,7 +3,6 @@
 An application where the users can add/remove music albums to/from their collections, share them, whislist, Admin users can also add, modify or delete albums, bands, and more, and Mega also assign who is an Admin or a normal user
 
 Future updates:
-- [WIP]Display options (Drawer or BottomNavigationBar) depending of the type of user
 - Add login/signup validation
 - Improve login/signup Screens style
 - Improve AvatarGlow https://pub.dev/packages/avatar_glow

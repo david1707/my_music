@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       automaticallyImplyLeading: false,
       title: Text(title),
       actions: actions != null ? actions : null,
-      leading: Builder(
+      leading: title == 'Login' || title == 'Sign up' ? null : Builder(
         builder: (context) => IconButton(
           icon: Icon(Icons.menu_rounded),
           onPressed: () => Scaffold.of(context).openDrawer(),
