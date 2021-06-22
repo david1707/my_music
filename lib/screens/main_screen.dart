@@ -6,6 +6,7 @@ import 'package:badges/badges.dart';
 import 'package:my_music/provider/user_provider.dart';
 import 'package:my_music/screens/login_screen.dart';
 import 'package:provider/provider.dart';
+import '../widgets/appbar.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = '/';
@@ -21,9 +22,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-        centerTitle: true,
+      appBar: CustomAppBar(
+        title: 'Home',
         actions: [
           IconButton(
             onPressed: () {
@@ -58,9 +58,9 @@ class _MainScreenState extends State<MainScreen> {
             Consumer<UserProvider>(
               builder: (context, user, child) {
                 if (user?.getRole != null)
-                return Text('This is your role: ${user.getRole}');
+                  return Text('This is your role: ${user.getRole}');
                 else
-                return Text('Error fetching data. Please, log in again.');
+                  return Text('Error fetching data. Please, log in again.');
               },
             ),
             Text('Welcome YOUR NAME!'),
