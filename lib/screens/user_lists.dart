@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../screens/user_view_list.dart';
-import '../widgets/appbar.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO: A list of Lists created by the user with their favourites albums
 // TODO: FAB/AppBar Icon to create a new one, swipe to delete (Modal confirmation), click to view/edit
@@ -27,7 +30,17 @@ class _UserListsScreenState extends State<UserListsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'User Lists page',),
+      appBar: CustomAppBar(
+        title: 'User Lists page',
+      ),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
+      ),
       body: Center(
         child: ListView.builder(
           itemBuilder: (context, index) {
@@ -36,7 +49,8 @@ class _UserListsScreenState extends State<UserListsScreen> {
               key: Key(list),
               background: kDismissibleContainer,
               child: GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(UserViewListcreen.routeName),
+                onTap: () => Navigator.of(context)
+                    .pushNamed(UserViewListcreen.routeName),
                 child: Card(
                   elevation: null,
                   child: ListTile(

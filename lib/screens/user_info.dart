@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../widgets/appbar.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO Display user info (Name, avatar, number of albums on the wishlist + link, number of albums on the collection + link, stats [cheese graph of genres by %])
 
@@ -12,6 +15,14 @@ class UserInfoScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'User Info page',
+      ),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
       ),
       body: Center(
         child: Column(

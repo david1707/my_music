@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_music/widgets/custom_drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart';
 
 import '../provider/user_provider.dart';
 import '../screens/login_screen.dart';
-import '../widgets/appbar.dart';
+import '../widgets/custom_appbar.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = '/';
@@ -17,11 +18,18 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int totalWishlist = 3;
-  String userRole = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
+      ),
       appBar: CustomAppBar(
         title: 'Home',
         actions: [
@@ -60,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
                 if (user?.getRole != null)
                   return Text('This is your role: ${user.getRole}');
                 else
-                  return Text('Error fetching data. Please, log in again.');
+                  return Text('Error: No user detected');
               },
             ),
             Text('Welcome YOUR NAME!'),

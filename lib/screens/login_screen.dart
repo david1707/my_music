@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:my_music/models/user_auth.dart';
 
 import '../constants.dart';
-import '../widgets/appbar.dart';
+import '../widgets/custom_appbar.dart';
 import '../widgets/rounded_text_field.dart';
 
 class LoginScreen extends StatelessWidget {

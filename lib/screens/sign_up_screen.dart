@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../models/user_auth.dart';
 import '../helper/snackbar.dart';
-import '../widgets/appbar.dart';
+import '../widgets/custom_appbar.dart';
 import '../widgets/rounded_text_field.dart';
 
 // TODO: Add validation according to Firebase standards

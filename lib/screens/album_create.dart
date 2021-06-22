@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import '../widgets/appbar.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO: Create a new Album (Date Released, id Genre, Time Length, List<String> tracks, String Title, Band Band, String Photo)
 
@@ -18,7 +21,17 @@ class _AlbumCreateScreenState extends State<AlbumCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Create a new Album',),
+      appBar: CustomAppBar(
+        title: 'Create a new Album',
+      ),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
+      ),
       body: Center(
         child: Form(
           key: _formKey,

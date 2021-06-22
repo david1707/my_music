@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import '../widgets/appbar.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO: Edit an Album (Date Released, id Genre, Time Length, List<String> tracks, String Title, Band Band, String Photo)
 // TODO: Delete button with confirmation
@@ -21,6 +24,14 @@ class _AlbumEditScreenState extends State<AlbumEditScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         title: 'Album Edit page',
+      ),
+           drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
       ),
       body: Center(
         child: Form(
