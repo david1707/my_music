@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -20,9 +21,7 @@ class UserCollectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'User Collection page',
-      ),
+      appBar: CustomAppBar(title: 'Collections'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)

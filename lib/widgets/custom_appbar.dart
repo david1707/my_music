@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../screens/login_screen.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
@@ -16,13 +19,25 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       automaticallyImplyLeading: false,
       title: Text(title),
-      actions: actions != null ? actions : null,
-      leading: title == 'Login' || title == 'Sign up' ? null : Builder(
-        builder: (context) => IconButton(
-          icon: Icon(Icons.menu_rounded),
-          onPressed: () => Scaffold.of(context).openDrawer(),
-        ),
-      ),
+      actions: actions != null
+          ? [
+              IconButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushNamed(LoginScreen.routeName);
+                },
+                icon: Icon(Icons.logout),
+              )
+            ]
+          : null,
+      leading: title == 'Login' || title == 'Sign up'
+          ? null
+          : Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu_rounded),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
+            ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:my_music/screens/album_list.dart';
 import 'package:my_music/screens/band_create.dart';
 import 'package:my_music/screens/band_list.dart';
 import 'package:my_music/screens/genre_list.dart';
+import 'package:my_music/screens/main_screen.dart';
 import 'package:my_music/screens/user_info.dart';
 import 'package:my_music/screens/user_whislist.dart';
 
@@ -27,6 +28,12 @@ class CustomDrawer extends StatelessWidget {
               ),
             ),
             child: null,
+          ),
+          ListTile(
+            title: Text('Home'),
+            onTap: () {
+              Navigator.of(context).pushNamed(MainScreen.routeName);
+            },
           ),
           ListTile(
             title: Text('View User Info'),

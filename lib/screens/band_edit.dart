@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -22,9 +23,7 @@ class _BandEditScreenState extends State<BandEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Band Edit page',
-      ),
+      appBar: CustomAppBar(title: 'Edit Band'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)

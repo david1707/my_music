@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -30,9 +31,7 @@ class _UserListsScreenState extends State<UserListsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'User Lists page',
-      ),
+      appBar: CustomAppBar(title: 'Lists'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)

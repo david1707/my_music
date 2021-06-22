@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -21,9 +22,7 @@ class _BandCreateScreenState extends State<BandCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Band Create page',
-      ),
+      appBar: CustomAppBar(title: 'Add a new Band'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -22,10 +23,8 @@ class _AlbumEditScreenState extends State<AlbumEditScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Album Edit page',
-      ),
-           drawer: Consumer<UserProvider>(
+      appBar: CustomAppBar(title: 'Edit Album'),
+      drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)
             return CustomDrawer(user.getRole);

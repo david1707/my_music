@@ -29,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Sign up page',
+        title: 'Sign up',
       ),
       body: Center(
         child: Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../widgets/list_of_albums.dart';
@@ -24,9 +25,7 @@ class UserViewListcreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: 'User List page',
-      ),
+      appBar: CustomAppBar(title: 'List NAME_OF_THE_LIST'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)
