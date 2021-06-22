@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import '../constants.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO: List every album on the User Collection (List of IDs). The same filters on Album_list
 
@@ -16,8 +21,14 @@ class UserCollectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Collection page'),
+      appBar: CustomAppBar(title: 'Collections'),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
       ),
       body: Center(
         child: ListView.builder(

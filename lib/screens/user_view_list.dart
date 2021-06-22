@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import '../widgets/list_of_albums.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO: A list of albums created by the user
 // TODO: FAB/AppBar Icon to add a new album, swipe to delete it (Modal confirmation)
@@ -20,8 +25,14 @@ class UserViewListcreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User List page'),
+      appBar: CustomAppBar(title: 'List NAME_OF_THE_LIST'),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
       ),
       // TODO: Pass down a Icon.delete button to delete it from the list
       body: ListOfAlbums(albumList: albumList),

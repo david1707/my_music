@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+
 import '../constants.dart';
+import './login_screen.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO: List all genres. FAB/AppBar button to add a new one, click to edit (Modal), swipe to delete (Modal confirmation)
 
@@ -24,8 +31,14 @@ class GenreListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Genre List page'),
+      appBar: CustomAppBar(title: 'List of all musical Genres'),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
       ),
       body: Center(
         child: ListView.builder(

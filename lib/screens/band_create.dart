@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import '../constants.dart';
+import '../provider/user_provider.dart';
+import '../widgets/custom_appbar.dart';
+import '../widgets/custom_drawer.dart';
 
 // TODO: Create a new Band (String name, String Description, String Members, id Genre, String From, bool Active, String Photo)
 
@@ -17,10 +22,16 @@ class _BandCreateScreenState extends State<BandCreateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Band Create page'),
+      appBar: CustomAppBar(title: 'Add a new Band'),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
       ),
-       body: Center(
+      body: Center(
         child: Form(
           key: _formKey,
           child: Column(
@@ -71,6 +82,6 @@ class _BandCreateScreenState extends State<BandCreateScreen> {
           ),
         ),
       ),
-      );
+    );
   }
 }
