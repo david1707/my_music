@@ -23,6 +23,17 @@ class GenreProvider with ChangeNotifier {
     }
   }
 
+  static Future updateGenre(String id, String title) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('genres')
+          .doc(id)
+          .update({'title': title});
+    } catch (e) {
+      throw(e);
+    }
+  }
+
   List<Map<String, dynamic>> get getGenres {
     return _genres;
   }

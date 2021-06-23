@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:my_music/provider/genre_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
-import './login_screen.dart';
+import '../helper/snackbar.dart';
+import '../provider/genre_provider.dart';
 import '../provider/user_provider.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_drawer.dart';
 
 // TODO: List all genres. FAB/AppBar button to add a new one, click to edit (Modal), swipe to delete (Modal confirmation)
 
-class GenreListScreen extends StatelessWidget {
+class GenreListScreen extends StatefulWidget {
   static const routeName = '/genre-list';
+
+  @override
+  _GenreListScreenState createState() => _GenreListScreenState();
+}
+
+class _GenreListScreenState extends State<GenreListScreen> {
+  final TextEditingController _titleController = new TextEditingController();
+  final GlobalKey<FormState> _keyDialogForm = new GlobalKey<FormState>();
+  var initialGenreTitle = '';
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +55,8 @@ class GenreListScreen extends StatelessWidget {
                         IconButton(
                           icon: Icon(Icons.edit),
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                title: Text('Editing $genre'),
-                              ),
-                            );
+                            _titleController.text = genre['title'];
+                            showEditTitleDialog(context, genre);
                           },
                         ),
                       ],
@@ -64,6 +68,77 @@ class GenreListScreen extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Future showEditTitleDialog(BuildContext context, Map<String, dynamic> genre) {
+    print(genre);
+    return showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Form(
+          key: _keyDialogForm,
+          child: Column(
+            children: <Widget>[
+              TextFormField(
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.edit),
+                ),
+                controller: _titleController,
+                maxLength: 20,
+                textAlign: TextAlign.center,
+                onSaved: (value) {
+                  _titleController.text = value;
+                },
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Enter a genre, please.';
+                  } else if (value.length < 2) {
+                    return 'Too short.';
+                  }
+                  return null;
+                },
+              )
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              if (_keyDialogForm.currentState.validate()) {
+                _keyDialogForm.currentState.save();
+                try {
+                  await GenreProvider.updateGenre(
+                      genre['id'], _titleController.text);
+                } on Exception catch (_) {
+                  showSnackBar(
+                    text: 'Unknown error updating the genre.',
+                    color: Colors.red,
+                    context: context,
+                  );
+                }
+              }
+            },
+            child: Text(
+              'Save',
+              style: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cancel',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
