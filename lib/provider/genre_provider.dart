@@ -12,6 +12,8 @@ class GenreProvider with ChangeNotifier {
       QuerySnapshot<Map<String, dynamic>> genres =
           await FirebaseFirestore.instance.collection('genres').get();
 
+      // Reseting the Genres list (Important!)
+      _genres = [];
       genres.docs.forEach((genre) {
         _genres.add({'id': genre.id, 'title': genre['title']});
       });
