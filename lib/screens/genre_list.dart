@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:my_music/provider/genre_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
@@ -13,20 +14,6 @@ import '../widgets/custom_drawer.dart';
 
 class GenreListScreen extends StatelessWidget {
   static const routeName = '/genre-list';
-
-  List<String> genreList = [
-    'Punk',
-    'Hardcore',
-    'Ska',
-    'Reggae',
-    'Oi!',
-    'Heavy Metal',
-    'Rock',
-    'Blues',
-    'Jazz',
-    'Hip Hop',
-    'Commercial'
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -41,33 +28,41 @@ class GenreListScreen extends StatelessWidget {
         },
       ),
       body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            var genre = genreList[index];
-            return Dismissible(
-              key: Key(genre),
-              background: kDismissibleContainer,
-              child: Card(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(genre),
+        child: Consumer<GenreProvider>(
+          builder: (context, genreProvider, child) {
+            List<Map<String, dynamic>> genreList = genreProvider.getGenres;
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                var genre = genreList[index];
+
+                return Dismissible(
+                  key: Key(genre['id']),
+                  background: kDismissibleContainer,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(genre['title']),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                title: Text('Editing $genre'),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                    IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (_) =>
-                                AlertDialog(title: Text('Editing $genre')),
-                          );
-                        }),
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
+              itemCount: genreList.length,
             );
           },
-          itemCount: genreList.length,
         ),
       ),
     );

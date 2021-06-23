@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_music/provider/genre_provider.dart';
 
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,8 +27,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GenreProvider(),
+        ),
+      ],
       child: MyApp(),
     ),
   );
