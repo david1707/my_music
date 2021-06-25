@@ -7,7 +7,7 @@ class GenreProvider with ChangeNotifier {
 
   GenreProvider();
 
-  void fetchGenres() async {
+  Future fetchGenres() async {
     try {
       QuerySnapshot<Map<String, dynamic>> genres =
           await FirebaseFirestore.instance.collection('genres').get();
@@ -23,14 +23,15 @@ class GenreProvider with ChangeNotifier {
     }
   }
 
-  static Future updateGenre(String id, String title) async {
+  Future updateGenre(String id, String title) async {
     try {
       await FirebaseFirestore.instance
           .collection('genres')
           .doc(id)
           .update({'title': title});
+      notifyListeners();
     } catch (e) {
-      throw(e);
+      throw (e);
     }
   }
 

@@ -109,8 +109,12 @@ class _GenreListScreenState extends State<GenreListScreen> {
               if (_keyDialogForm.currentState.validate()) {
                 _keyDialogForm.currentState.save();
                 try {
-                  await GenreProvider.updateGenre(
-                      genre['id'], _titleController.text);
+                  await GenreProvider()
+                      .updateGenre(genre['id'], _titleController.text);
+                  await GenreProvider().fetchGenres();
+                  // TODO: This is a patch, I should use the proper way with Provider
+                  setState(() {});
+                  Navigator.pop(context);
                 } on Exception catch (_) {
                   showSnackBar(
                     text: 'Unknown error updating the genre.',
