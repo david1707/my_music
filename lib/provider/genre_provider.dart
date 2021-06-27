@@ -27,6 +27,18 @@ class GenreProvider with ChangeNotifier {
           .collection('genres')
           .doc(id)
           .update({'title': title});
+      var updatedGenre = _genres.firstWhere((element) => element['id'] == id);
+      updatedGenre['title'] = title;
+      notifyListeners();
+    } catch (e) {
+      throw (e);
+    }
+  }
+
+  Future deleteGenre(String id) async {
+    try {
+      await FirebaseFirestore.instance.collection('genres').doc(id).delete();
+      _genres.removeWhere((element) => element['id'] == id);
       notifyListeners();
     } catch (e) {
       throw (e);

@@ -46,6 +46,22 @@ class _GenreListScreenState extends State<GenreListScreen> {
                 return Dismissible(
                   key: Key(genre['id']),
                   background: kDismissibleContainer,
+                  confirmDismiss: (DismissDirection direction) async {
+                    switch (direction) {
+                      case DismissDirection.endToStart:
+                        return await showDeleteDialog(context, genre);
+                      case DismissDirection.startToEnd:
+                        return await showDeleteDialog(context, genre);
+                      case DismissDirection.horizontal:
+                      case DismissDirection.vertical:
+                      case DismissDirection.up:
+                      case DismissDirection.none:
+                      case DismissDirection.down:
+                        assert(false);
+                        break;
+                    }
+                    return false;
+                  },
                   child: Card(
                     child: Row(
                       children: [
@@ -73,7 +89,6 @@ class _GenreListScreenState extends State<GenreListScreen> {
   }
 
   Future showEditTitleDialog(BuildContext context, Map<String, dynamic> genre) {
-    print(genre);
     return showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -111,17 +126,59 @@ class _GenreListScreenState extends State<GenreListScreen> {
                 try {
                   await GenreProvider()
                       .updateGenre(genre['id'], _titleController.text);
-                  await GenreProvider().fetchGenres();
-                  // TODO: This is a patch, I should use the proper way with Provider
-                  setState(() {});
-                  Navigator.pop(context);
                 } on Exception catch (_) {
                   showSnackBar(
                     text: 'Unknown error updating the genre.',
                     color: Colors.red,
                     context: context,
                   );
+                } finally {
+                  Navigator.pop(context);
                 }
+              }
+            },
+            child: Text(
+              'Save',
+              style: TextStyle(
+                color: Colors.blue,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cancel',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future showDeleteDialog(
+      BuildContext context, Map<String, dynamic> genre) async {
+    return showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Do you want to delete ${genre['title']}?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              try {
+                await GenreProvider().deleteGenre(genre['id']);
+              } on Exception catch (_) {
+                showSnackBar(
+                  text: 'Unknown error updating the genre.',
+                  color: Colors.red,
+                  context: context,
+                );
+              } finally {
+                Navigator.pop(context);
               }
             },
             child: Text(
