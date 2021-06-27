@@ -5,8 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class GenreProvider with ChangeNotifier {
   static List<Map<String, dynamic>> _genres = [];
 
-  GenreProvider();
-
   Future fetchGenres() async {
     try {
       QuerySnapshot<Map<String, dynamic>> genres =
