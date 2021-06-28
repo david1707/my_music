@@ -15,6 +15,7 @@ class GenreProvider with ChangeNotifier {
       genres.docs.forEach((genre) {
         _genres.add({'id': genre.id, 'title': genre['title']});
       });
+
       notifyListeners();
     } catch (e) {
       print(e);

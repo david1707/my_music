@@ -25,64 +25,25 @@ class _GenreListScreenState extends State<GenreListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(title: 'List of all musical Genres'),
-      drawer: Consumer<UserProvider>(
-        builder: (context, user, child) {
-          if (user?.getRole != null)
-            return CustomDrawer(user.getRole);
-          else
-            return Text('Error: No user detected');
-        },
-      ),
-      body: Center(
-        child: Consumer<GenreProvider>(
-          builder: (context, genreProvider, child) {
-            List<Map<String, dynamic>> genreList = genreProvider.getGenres;
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                var genre = genreList[index];
-
-                return Dismissible(
-                  key: Key(genre['id']),
-                  background: kDismissibleContainer,
-                  confirmDismiss: (DismissDirection direction) async {
-                    switch (direction) {
-                      case DismissDirection.endToStart:
-                        return await showDeleteDialog(context, genre);
-                      case DismissDirection.startToEnd:
-                        return await showDeleteDialog(context, genre);
-                      case DismissDirection.horizontal:
-                      case DismissDirection.vertical:
-                      case DismissDirection.up:
-                      case DismissDirection.none:
-                      case DismissDirection.down:
-                        assert(false);
-                        break;
-                    }
-                    return false;
-                  },
-                  child: Card(
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(genre['title']),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            _titleController.text = genre['title'];
-                            showEditTitleDialog(context, genre);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-              itemCount: genreList.length,
-            );
+    return ChangeNotifierProvider(
+      create: (context) => GenreProvider(),
+      child: Scaffold(
+        appBar: CustomAppBar(title: 'List of all musical Genres'),
+        drawer: Consumer<UserProvider>(
+          builder: (context, user, child) {
+            if (user?.getRole != null)
+              return CustomDrawer(user.getRole);
+            else
+              return Text('Error: No user detected');
           },
+        ),
+        body: Center(
+          child: Consumer<GenreProvider>(
+            builder: (context, genreProvider, child) {
+              List<Map<String, dynamic>> genreList = genreProvider.getGenres;
+              return listGenreBuilder(genreList);
+            },
+          ),
         ),
       ),
     );
@@ -126,6 +87,7 @@ class _GenreListScreenState extends State<GenreListScreen> {
                 try {
                   await GenreProvider()
                       .updateGenre(genre['id'], _titleController.text);
+                      setState((){});
                 } on Exception catch (_) {
                   showSnackBar(
                     text: 'Unknown error updating the genre.',
@@ -201,6 +163,51 @@ class _GenreListScreenState extends State<GenreListScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  ListView listGenreBuilder(List<Map<String, dynamic>> genreList) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        var genre = genreList[index];
+        return Dismissible(
+          key: Key(genre['id']),
+          background: kDismissibleContainer,
+          confirmDismiss: (DismissDirection direction) async {
+            switch (direction) {
+              case DismissDirection.endToStart:
+                return await showDeleteDialog(context, genre);
+              case DismissDirection.startToEnd:
+                return await showDeleteDialog(context, genre);
+              case DismissDirection.horizontal:
+              case DismissDirection.vertical:
+              case DismissDirection.up:
+              case DismissDirection.none:
+              case DismissDirection.down:
+                assert(false);
+                break;
+            }
+            return false;
+          },
+          child: Card(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(genre['title']),
+                ),
+                IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () {
+                    _titleController.text = genre['title'];
+                    showEditTitleDialog(context, genre);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      itemCount: genreList.length,
     );
   }
 }
