@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_music/provider/genre_provider.dart';
 
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';

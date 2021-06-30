@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:my_music/provider/genre_provider.dart';
 
 import '../helper/snackbar.dart';
 import '../provider/user_provider.dart';
@@ -31,8 +30,6 @@ class UserAuth {
           .where('uid', isEqualTo: userCredential.user.uid)
           .get();
       UserProvider().changeRole(data.docs[0]['role']);
-
-      GenreProvider().fetchGenres();
 
       Navigator.of(context).pushNamed(MainScreen.routeName);
     } on FirebaseAuthException catch (e) {

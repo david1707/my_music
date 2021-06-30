@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../helper/snackbar.dart';
-import '../provider/genre_provider.dart';
+import '../models/genre.dart';
 import '../provider/user_provider.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_drawer.dart';
@@ -22,29 +23,88 @@ class _GenreListScreenState extends State<GenreListScreen> {
   final TextEditingController _titleController = new TextEditingController();
   final GlobalKey<FormState> _keyDialogForm = new GlobalKey<FormState>();
   var initialGenreTitle = '';
+  static final FirebaseFirestore db = FirebaseFirestore.instance;
+  CollectionReference genresCollection = db.collection('genres');
+
+  Stream<List<Genre>> genreStream() {
+    return genresCollection.snapshots().map((list) => list.docs
+        .map((genreSnapshot) => Genre.fromFireStore(genreSnapshot))
+        .toList());
+  }
+
+  Future<void> addGenre() async {
+    DocumentReference newGenre = genresCollection.doc();
+
+    await newGenre.set({'title': 'Heavy metal'});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => GenreProvider(),
-      child: Scaffold(
-        appBar: CustomAppBar(title: 'List of all musical Genres'),
-        drawer: Consumer<UserProvider>(
-          builder: (context, user, child) {
-            if (user?.getRole != null)
-              return CustomDrawer(user.getRole);
-            else
-              return Text('Error: No user detected');
-          },
+    return Scaffold(
+      appBar: CustomAppBar(title: 'List of all musical Genres'),
+      drawer: Consumer<UserProvider>(
+        builder: (context, user, child) {
+          if (user?.getRole != null)
+            return CustomDrawer(user.getRole);
+          else
+            return Text('Error: No user detected');
+        },
+      ),
+      bottomNavigationBar: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async {
+          addGenre();
+        },
+      ),
+      body: Center(
+        child: StreamProvider<List<Genre>>.value(
+          value: genreStream(),
+          initialData: [],
+          child: GenreList(),
         ),
-        body: Center(
-          child: Consumer<GenreProvider>(
-            builder: (context, genreProvider, child) {
-              List<Map<String, dynamic>> genreList = genreProvider.getGenres;
-              return listGenreBuilder(genreList);
-            },
-          ),
-        ),
+
+        // child: ListView.builder(
+        //   itemBuilder: (context, index) {
+        //     Map genre = {'id': 'xD', 'title': 'xD'};
+        //     return Dismissible(
+        //       key: Key(genre['id']),
+        //       background: kDismissibleContainer,
+        //       confirmDismiss: (DismissDirection direction) async {
+        //         switch (direction) {
+        //           case DismissDirection.endToStart:
+        //             return await showDeleteDialog(context, genre);
+        //           case DismissDirection.startToEnd:
+        //             return await showDeleteDialog(context, genre);
+        //           case DismissDirection.horizontal:
+        //           case DismissDirection.vertical:
+        //           case DismissDirection.up:
+        //           case DismissDirection.none:
+        //           case DismissDirection.down:
+        //             assert(false);
+        //             break;
+        //         }
+        //         return false;
+        //       },
+        //       child: Card(
+        //         child: Row(
+        //           children: [
+        //             Expanded(
+        //               child: Text(genre['title']),
+        //             ),
+        //             IconButton(
+        //               icon: Icon(Icons.edit),
+        //               onPressed: () {
+        //                 _titleController.text = genre['title'];
+        //                 showEditTitleDialog(context, genre);
+        //               },
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     );
+        //   },
+        //   itemCount: 4,
+        // ),
       ),
     );
   }
@@ -85,9 +145,8 @@ class _GenreListScreenState extends State<GenreListScreen> {
               if (_keyDialogForm.currentState.validate()) {
                 _keyDialogForm.currentState.save();
                 try {
-                  await GenreProvider()
-                      .updateGenre(genre['id'], _titleController.text);
-                      setState((){});
+                  // await GenreProvider()
+                  //     .updateGenre(genre['id'], _titleController.text);
                 } on Exception catch (_) {
                   showSnackBar(
                     text: 'Unknown error updating the genre.',
@@ -132,7 +191,7 @@ class _GenreListScreenState extends State<GenreListScreen> {
           TextButton(
             onPressed: () async {
               try {
-                await GenreProvider().deleteGenre(genre['id']);
+                // await GenreProvider().deleteGenre(genre['id']);
               } on Exception catch (_) {
                 showSnackBar(
                   text: 'Unknown error updating the genre.',
@@ -165,49 +224,28 @@ class _GenreListScreenState extends State<GenreListScreen> {
       ),
     );
   }
+}
 
-  ListView listGenreBuilder(List<Map<String, dynamic>> genreList) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        var genre = genreList[index];
-        return Dismissible(
-          key: Key(genre['id']),
-          background: kDismissibleContainer,
-          confirmDismiss: (DismissDirection direction) async {
-            switch (direction) {
-              case DismissDirection.endToStart:
-                return await showDeleteDialog(context, genre);
-              case DismissDirection.startToEnd:
-                return await showDeleteDialog(context, genre);
-              case DismissDirection.horizontal:
-              case DismissDirection.vertical:
-              case DismissDirection.up:
-              case DismissDirection.none:
-              case DismissDirection.down:
-                assert(false);
-                break;
-            }
-            return false;
-          },
-          child: Card(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(genre['title']),
-                ),
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    _titleController.text = genre['title'];
-                    showEditTitleDialog(context, genre);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-      itemCount: genreList.length,
+class GenreList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var genres = Provider.of<List<Genre>>(context);
+    return ListView(
+        children: genres.map((Genre genre) => GenreItem(genre)).toList());
+  }
+}
+
+class GenreItem extends StatelessWidget {
+  final Genre genre;
+  GenreItem(this.genre);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        genre.title,
+        style: TextStyle(fontSize: 20),
+      ),
     );
   }
 }
