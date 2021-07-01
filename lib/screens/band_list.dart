@@ -24,7 +24,7 @@ class BandListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'List of all Bands'),
+      appBar: CustomAppBar(title: 'Bands'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)

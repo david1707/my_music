@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/genre/genre.dart';
+import '../models/genre/genre_dialog.dart';
 import '../models/genre/genre_list.dart';
 import '../provider/user_provider.dart';
 import '../widgets/custom_appbar.dart';
@@ -34,7 +35,7 @@ class _GenreListScreenState extends State<GenreListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'List of all musical Genres'),
+      appBar: CustomAppBar(title: 'Genres'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)
@@ -46,7 +47,11 @@ class _GenreListScreenState extends State<GenreListScreen> {
       bottomNavigationBar: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
-          Genre.addGenre(genresCollection, 'Parapapa');
+          showAddDialog(
+            context,
+            _keyDialogForm,
+            _titleController,
+          );
         },
       ),
       body: Center(

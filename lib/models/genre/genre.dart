@@ -15,7 +15,6 @@ class Genre with ChangeNotifier {
   }
 
   static Future<void> addGenre(
-    CollectionReference genresCollection,
     String title,
   ) async {
     await genresCollection.doc().set({'title': title});
