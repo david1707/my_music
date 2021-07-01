@@ -94,6 +94,7 @@ Future showEditTitleDialog(
                   context: context,
                 );
               } finally {
+                _titleController.text = '';
                 Navigator.pop(context);
               }
             }
@@ -121,9 +122,7 @@ Future showEditTitleDialog(
   );
 }
 
-Future showAddDialog(
-    BuildContext context,
-    GlobalKey<FormState> _keyDialogForm,
+Future showAddDialog(BuildContext context, GlobalKey<FormState> _keyDialogForm,
     TextEditingController _titleController) {
   return showDialog(
     context: context,
@@ -165,6 +164,7 @@ Future showAddDialog(
                   context: context,
                 );
               } finally {
+                _titleController.text = '';
                 Navigator.pop(context);
               }
             }

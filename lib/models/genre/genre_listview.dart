@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import './genre.dart';
-import './genre_dialog.dart';
+import 'genre.dart';
+import 'genre_dialog.dart';
 import '../../constants.dart';
 
 class GenreList extends StatelessWidget {
@@ -15,7 +15,6 @@ class GenreList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var genres = Provider.of<List<Genre>>(context);
-
     return ListView.builder(
       itemBuilder: (context, index) {
         Genre genre = genres[index];
