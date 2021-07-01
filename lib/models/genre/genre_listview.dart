@@ -19,23 +19,11 @@ class GenreList extends StatelessWidget {
       itemBuilder: (context, index) {
         Genre genre = genres[index];
         return Dismissible(
+          direction: DismissDirection.endToStart,
           key: Key(genre.id),
           background: kDismissibleContainer,
           confirmDismiss: (DismissDirection direction) async {
-            switch (direction) {
-              case DismissDirection.endToStart:
-                return await showDeleteDialog(context, genre);
-              case DismissDirection.startToEnd:
-                return await showDeleteDialog(context, genre);
-              case DismissDirection.horizontal:
-              case DismissDirection.vertical:
-              case DismissDirection.up:
-              case DismissDirection.none:
-              case DismissDirection.down:
-                assert(false);
-                break;
-            }
-            return false;
+            return await showDeleteDialog(context, genre);
           },
           child: Card(
             child: Row(
