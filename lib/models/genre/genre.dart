@@ -24,4 +24,8 @@ class Genre with ChangeNotifier {
   static Future<void> updateGenre(String genreID, String genreNewTitle) async {
     await genresCollection.doc(genreID).update({'title': genreNewTitle});
   }
+
+  static Future<void> deleteGenre(String genreID) async {
+    await genresCollection.doc(genreID).delete();
+  }
 }

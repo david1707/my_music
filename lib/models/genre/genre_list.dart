@@ -69,7 +69,7 @@ class GenreList extends StatelessWidget {
           TextButton(
             onPressed: () async {
               try {
-                // await GenreProvider().deleteGenre(genre['id']);
+                await Genre.deleteGenre(genre.id);
               } on Exception catch (_) {
                 showSnackBar(
                   text: 'Unknown error updating the genre.',
@@ -81,7 +81,7 @@ class GenreList extends StatelessWidget {
               }
             },
             child: Text(
-              'Save',
+              'Delete',
               style: TextStyle(
                 color: Colors.blue,
               ),
@@ -152,7 +152,7 @@ class GenreList extends StatelessWidget {
               }
             },
             child: Text(
-              'Save',
+              'Update',
               style: TextStyle(
                 color: Colors.blue,
               ),
