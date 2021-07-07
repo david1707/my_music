@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../provider/user_provider.dart';
-import '../widgets/custom_appbar.dart';
-import '../widgets/custom_drawer.dart';
+import '../../provider/user_provider.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_drawer.dart';
 
 // TODO: List every band (ListView + link to the band). Add filters (by genre, from, active...)
 

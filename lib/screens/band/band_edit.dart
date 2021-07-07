@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
-import '../provider/user_provider.dart';
-import '../widgets/custom_appbar.dart';
-import '../widgets/custom_drawer.dart';
+import '../../constants.dart';
+import '../../provider/user_provider.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_drawer.dart';
 
-// TODO: Create a new Band (String name, String Description, String Members, id Genre, String From, bool Active, String Photo)
+// TODO: Edit a Band (String name, String Description, String Members, id Genre, String From, bool Active, String Photo)
+// TODO: Delete button with confirmation
 
-class BandCreateScreen extends StatefulWidget {
-  static const routeName = '/band-create';
+class BandEditScreen extends StatefulWidget {
+  static const routeName = '/band-edit';
 
   @override
-  _BandCreateScreenState createState() => _BandCreateScreenState();
+  _BandEditScreenState createState() => _BandEditScreenState();
 }
 
-class _BandCreateScreenState extends State<BandCreateScreen> {
+class _BandEditScreenState extends State<BandEditScreen> {
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Add a new Band'),
+      appBar: CustomAppBar(title: 'Edit Band'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)

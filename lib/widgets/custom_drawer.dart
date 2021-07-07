@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_music/screens/album_create.dart';
 
 import 'package:my_music/screens/album_list.dart';
-import 'package:my_music/screens/band_create.dart';
-import 'package:my_music/screens/band_list.dart';
+import 'package:my_music/screens/band/band_create.dart';
+import 'package:my_music/screens/band/band_list.dart';
 import 'package:my_music/screens/genre/genre_list_screen.dart';
 import 'package:my_music/screens/main_screen.dart';
 import 'package:my_music/screens/user_info.dart';

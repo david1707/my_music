@@ -8,9 +8,9 @@ import 'provider/user_provider.dart';
 import './screens/album_create.dart';
 import './screens/album_edit.dart';
 import './screens/album_list.dart';
-import './screens/band_create.dart';
-import './screens/band_edit.dart';
-import './screens/band_list.dart';
+import './screens/band/band_create.dart';
+import './screens/band/band_edit.dart';
+import './screens/band/band_list.dart';
 import 'screens/genre/genre_list_screen.dart';
 import './screens/login_screen.dart';
 import './screens/main_screen.dart';
@@ -26,8 +26,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => UserProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
       child: MyApp(),
     ),
   );
