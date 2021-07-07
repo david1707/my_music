@@ -23,7 +23,7 @@ class AlbumListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Add a new Album'),
+      appBar: CustomAppBar(title: 'Albums'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)

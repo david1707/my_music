@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../helper/snackbar.dart';
 import '../provider/user_provider.dart';
@@ -25,7 +25,10 @@ class UserAuth {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 
-      var data = await FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: userCredential.user.uid).get();
+      var data = await FirebaseFirestore.instance
+          .collection('users')
+          .where('uid', isEqualTo: userCredential.user.uid)
+          .get();
       UserProvider().changeRole(data.docs[0]['role']);
 
       Navigator.of(context).pushNamed(MainScreen.routeName);

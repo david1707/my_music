@@ -19,17 +19,15 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
       centerTitle: true,
       automaticallyImplyLeading: false,
       title: Text(title),
-      actions: actions != null
-          ? [
-              IconButton(
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushNamed(LoginScreen.routeName);
-                },
-                icon: Icon(Icons.logout),
-              )
-            ]
-          : null,
+      actions: [
+        IconButton(
+          onPressed: () async {
+            await FirebaseAuth.instance.signOut();
+            Navigator.of(context).pushNamed(LoginScreen.routeName);
+          },
+          icon: Icon(Icons.logout),
+        )
+      ],
       leading: title == 'Login' || title == 'Sign up'
           ? null
           : Builder(

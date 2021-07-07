@@ -1,37 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
-import './login_screen.dart';
+import '../models/genre/genre.dart';
+import '../models/genre/genre_dialog.dart';
+import '../models/genre/genre_listview.dart';
 import '../provider/user_provider.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_drawer.dart';
 
-// TODO: List all genres. FAB/AppBar button to add a new one, click to edit (Modal), swipe to delete (Modal confirmation)
+final TextEditingController _titleController = new TextEditingController();
+final GlobalKey<FormState> _keyDialogForm = new GlobalKey<FormState>();
 
-class GenreListScreen extends StatelessWidget {
+class GenreListScreen extends StatefulWidget {
   static const routeName = '/genre-list';
 
-  List<String> genreList = [
-    'Punk',
-    'Hardcore',
-    'Ska',
-    'Reggae',
-    'Oi!',
-    'Heavy Metal',
-    'Rock',
-    'Blues',
-    'Jazz',
-    'Hip Hop',
-    'Commercial'
-  ];
+  @override
+  _GenreListScreenState createState() => _GenreListScreenState();
+}
+
+class _GenreListScreenState extends State<GenreListScreen> {
+  static final CollectionReference genresCollection =
+      FirebaseFirestore.instance.collection('genres');
+
+  Stream<List<Genre>> genreStream() {
+    return genresCollection.orderBy('title').snapshots() .map(
+          (list) => list.docs
+              .map((genreSnapshot) => Genre.fromFireStore(genreSnapshot))
+              .toList(),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'List of all musical Genres'),
+      appBar: CustomAppBar(title: 'Genres'),
       drawer: Consumer<UserProvider>(
         builder: (context, user, child) {
           if (user?.getRole != null)
@@ -40,34 +44,21 @@ class GenreListScreen extends StatelessWidget {
             return Text('Error: No user detected');
         },
       ),
+      bottomNavigationBar: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async {
+          showAddDialog(
+            context,
+            _keyDialogForm,
+            _titleController,
+          );
+        },
+      ),
       body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            var genre = genreList[index];
-            return Dismissible(
-              key: Key(genre),
-              background: kDismissibleContainer,
-              child: Card(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(genre),
-                    ),
-                    IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (_) =>
-                                AlertDialog(title: Text('Editing $genre')),
-                          );
-                        }),
-                  ],
-                ),
-              ),
-            );
-          },
-          itemCount: genreList.length,
+        child: StreamProvider<List<Genre>>.value(
+          value: genreStream(),
+          initialData: [],
+          child: GenreList(_titleController, _keyDialogForm),
         ),
       ),
     );
