@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'genre_listview.dart';
+import './genre_dialog.dart';
+import './genre_listview.dart';
 import '../../models/genre.dart';
 import '../../provider/user_provider.dart';
-import 'genre_dialog.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_drawer.dart';
 
@@ -25,7 +25,7 @@ class _GenreListScreenState extends State<GenreListScreen> {
       FirebaseFirestore.instance.collection('genres');
 
   Stream<List<Genre>> genreStream() {
-    return genresCollection.orderBy('title').snapshots() .map(
+    return genresCollection.orderBy('title').snapshots().map(
           (list) => list.docs
               .map((genreSnapshot) => Genre.fromFireStore(genreSnapshot))
               .toList(),

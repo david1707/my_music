@@ -1,25 +1,30 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import './band_listview.dart';
+import '../../models/band.dart';
 import '../../provider/user_provider.dart';
 import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_drawer.dart';
 
-// TODO: List every band (ListView + link to the band). Add filters (by genre, from, active...)
-
-class BandListScreen extends StatelessWidget {
+class BandListScreen extends StatefulWidget {
   static const routeName = '/band-list';
 
-  List<Map> bandList = [
-    {'title': 'Dead Kennedys', 'genre': 'Punk'},
-    {'title': 'Minor Threat', 'genre': 'Straight Edge'},
-    {'title': 'The Specials', 'genre': 'Ska'},
-    {'title': 'Sex Pistols', 'genre': 'Punk'},
-    {'title': 'Agent Orange', 'genre': 'Surf Punk'},
-    {'title': 'Britney Spears', 'genre': 'Pop'},
-    {'title': 'Eskorbuto', 'genre': 'Punk'},
-  ];
+  @override
+  _BandListScreenState createState() => _BandListScreenState();
+}
+
+class _BandListScreenState extends State<BandListScreen> {
+  static final CollectionReference bandsCollection =
+      FirebaseFirestore.instance.collection('bands');
+
+  Stream<List<Band>> bandStream() {
+    return bandsCollection.orderBy('name').snapshots().map((list) => list.docs
+        .map((bandSnapshot) => Band.fromFireStore(bandSnapshot))
+        .toList());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +39,8 @@ class BandListScreen extends StatelessWidget {
         },
       ),
       body: Center(
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: null,
-              child: ListTile(
-                leading: SizedBox(
-                  child: Image.asset('assets/images/placeholder_band.png'),
-                ),
-                title: Text(bandList[index]['title']),
-                subtitle: Text(bandList[index]['genre']),
-              ),
-            );
-          },
-          itemCount: bandList.length,
-        ),
+        child: StreamProvider<List<Band>>.value(
+            value: bandStream(), initialData: [], child: BandListView()),
       ),
     );
   }
