@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'genre.dart';
-import 'genre_dialog.dart';
+import './genre_dialog.dart';
+import '../../models/genre.dart';
 import '../../constants.dart';
 
-class GenreList extends StatelessWidget {
+class GenreListView extends StatelessWidget {
   final TextEditingController _titleController;
   final GlobalKey<FormState> _keyDialogForm;
 
-  GenreList(this._titleController, this._keyDialogForm);
+  GenreListView(this._titleController, this._keyDialogForm);
 
   @override
   Widget build(BuildContext context) {

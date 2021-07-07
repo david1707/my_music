@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../models/genre/genre.dart';
-import '../models/genre/genre_dialog.dart';
-import '../models/genre/genre_listview.dart';
-import '../provider/user_provider.dart';
-import '../widgets/custom_appbar.dart';
-import '../widgets/custom_drawer.dart';
+import 'genre_listview.dart';
+import '../../models/genre.dart';
+import '../../provider/user_provider.dart';
+import 'genre_dialog.dart';
+import '../../widgets/custom_appbar.dart';
+import '../../widgets/custom_drawer.dart';
 
 final TextEditingController _titleController = new TextEditingController();
 final GlobalKey<FormState> _keyDialogForm = new GlobalKey<FormState>();
@@ -58,7 +58,7 @@ class _GenreListScreenState extends State<GenreListScreen> {
         child: StreamProvider<List<Genre>>.value(
           value: genreStream(),
           initialData: [],
-          child: GenreList(_titleController, _keyDialogForm),
+          child: GenreListView(_titleController, _keyDialogForm),
         ),
       ),
     );

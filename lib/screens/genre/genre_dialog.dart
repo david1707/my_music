@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './genre.dart';
+import '../../models/genre.dart';
 import '../../helper/snackbar.dart';
 
 Future showDeleteDialog(BuildContext context, Genre genre) async {
