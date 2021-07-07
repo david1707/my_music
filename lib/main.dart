@@ -11,7 +11,7 @@ import './screens/album_list.dart';
 import './screens/band_create.dart';
 import './screens/band_edit.dart';
 import './screens/band_list.dart';
-import './screens/genre_list.dart';
+import 'screens/genre/genre_list_screen.dart';
 import './screens/login_screen.dart';
 import './screens/main_screen.dart';
 import './screens/sign_up_screen.dart';
